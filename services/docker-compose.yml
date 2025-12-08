@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  auth:
+    build: ./auth
+    container_name: auth
+    command: ["python", "./wait-for-db.py", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    ports:
+      - "8001:8000"
+    environment:
+      - DB_NAME=authdb
+      - DB_USER=user
+      - DB_PASSWORD=pass
+      - DB_HOST=db-auth
+      - DB_PORT=5432
+    depends_on:
+      - db-auth
+    volumes:
+      - ./auth:/app
+
+  db-auth:
+    image: postgres:16
+    container_name: db-auth
+    environment:
+      POSTGRES_DB: authdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+
+volumes:
+  auth_data:
+
