@@ -45,7 +45,7 @@ class LoginView(APIView):
 
         return response
 
-class UserView(APIView):
+class MeView(APIView):
     def get(self, request):
         token = request.COOKIES.get('jwt')
 

@@ -1,0 +1,7 @@
+@if (profile$ | async; as profile) {
+  <p>{{ profile.id }}</p>
+  <p>Witaj, {{ profile.name }}!</p>
+  <button (click)="logout()">Wyloguj</button>
+} @else {
+  <p>Ładowanie profilu...</p>
+}
