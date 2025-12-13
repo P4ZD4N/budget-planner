@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { LoginFormGroup } from '../../models/login.model';
 import { Router } from '@angular/router';
+import { LoginFormGroup } from '../../models/login.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-view',
   templateUrl: './login-view.component.html',
+  styleUrls: ['./login-view.component.scss'],
   imports: [ReactiveFormsModule],
 })
 export class LoginViewComponent {

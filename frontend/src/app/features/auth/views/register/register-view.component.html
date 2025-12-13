@@ -1,29 +1,37 @@
-<form [formGroup]="registerForm" (ngSubmit)="submit()">
+<section class="header-section">
+  <img src="/images/logo.png" alt="Logo" />
+  <h1>Register Your Account.</h1>
+</section>
+
+<form class="register-form" [formGroup]="registerForm" (ngSubmit)="submit()">
   <label>
-    Name:
+    Name
     <input type="text" formControlName="name" />
   </label>
   @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
-    <div style="color: red">Name is required</div>
+    <div class="error-message">Name is required</div>
   }
 
   <label>
-    Email:
+    Email
     <input type="email" formControlName="email" />
   </label>
-
   @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-    <div style="color: red">Enter a valid email</div>
+    <div class="error-message">Enter a valid email</div>
   }
 
   <label>
-    Password:
+    Password
     <input type="password" formControlName="password" />
   </label>
-
   @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-    <div style="color: red">Password is required</div>
+    <div class="error-message">Password is required</div>
   }
 
   <button type="submit" [disabled]="registerForm.invalid">Submit</button>
+
+  <section class="form-bottom-section">
+    <a href="/">Back To Home</a>
+    <a href="/login">Already Has Account? Log In!</a>
+  </section>
 </form>

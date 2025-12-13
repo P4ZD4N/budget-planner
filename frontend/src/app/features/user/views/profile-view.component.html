@@ -1,7 +1,64 @@
 @if (profile$ | async; as profile) {
-  <p>{{ profile.id }}</p>
-  <p>Witaj, {{ profile.name }}!</p>
-  <button (click)="logout()">Wyloguj</button>
+  <div class="dashboard">
+    <section class="dashboard-header">
+      <h1>Witaj, {{ profile?.name }}!</h1>
+      <button (click)="logout()">Wyloguj</button>
+    </section>
+
+    <section class="month-selector">
+      <label>
+        Wybierz miesiąc:
+        <select [(ngModel)]="selectedMonth">
+          @for (month of months; track month) {
+            <option [value]="month">{{ month }}</option>
+          }
+        </select>
+      </label>
+    </section>
+
+    <section class="budget-summary">
+      <h2>Twój budżet na {{ selectedMonth }}</h2>
+      <div class="budget-total">
+        <p>Całkowity budżet:</p>
+        <p>{{ totalBudget | currency: 'PLN' }}</p>
+      </div>
+    </section>
+
+    <section class="budget-categories">
+      <h3>Kategorie</h3>
+      <div class="categories">
+        @for (cat of categories; track cat.name) {
+          <div class="category-card">
+            <p class="category-name">{{ cat.name }}</p>
+            <p class="category-amount">{{ cat.amount | currency: 'PLN' }}</p>
+          </div>
+        } @empty {
+          <p>Brak zdefiniowanych kategorii.</p>
+        }
+      </div>
+    </section>
+
+    <section class="add-category">
+      <h3>Dodaj nową kategorię</h3>
+      <form (ngSubmit)="addCategory()">
+        <input
+          type="text"
+          placeholder="Nazwa kategorii"
+          [(ngModel)]="newCategoryName"
+          name="name"
+          required
+        />
+        <input
+          type="number"
+          placeholder="Kwota"
+          [(ngModel)]="newCategoryAmount"
+          name="amount"
+          required
+        />
+        <button type="submit">Dodaj kategorię</button>
+      </form>
+    </section>
+  </div>
 } @else {
   <p>Ładowanie profilu...</p>
 }

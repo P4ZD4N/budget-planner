@@ -1,15 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 import { RegisterFormGroup } from '../../models/register.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-view',
   templateUrl: './register-view.component.html',
+  styleUrls: ['./register-view.component.scss'],
   imports: [ReactiveFormsModule],
 })
 export class RegisterViewComponent {
+  private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
+
   protected readonly registerForm: FormGroup = new FormGroup<RegisterFormGroup>({
     name: new FormControl('', { nonNullable: true, validators: Validators.required }),
     email: new FormControl('', {
@@ -23,7 +27,10 @@ export class RegisterViewComponent {
     if (this.registerForm.invalid) return;
 
     this.authService.register(this.registerForm.value).subscribe({
-      next: () => this.registerForm.reset(),
+      next: () => {
+        this.router.navigate(['/login']);
+        this.registerForm.reset();
+      },
       error: (err) => console.error(err),
     });
   }
