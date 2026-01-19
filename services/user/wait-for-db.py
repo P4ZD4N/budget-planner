@@ -18,4 +18,3 @@ while True:
 
 print("Database is up - executing command")
 os.execvp(sys.argv[1], sys.argv[1:])
-
